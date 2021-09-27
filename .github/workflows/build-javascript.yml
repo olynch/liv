@@ -9,8 +9,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - uses: erlef/setup-beam@v1
       - run: npm install --prefix ./assets
       - run: npm run deploy --prefix ./assets
+      - name: Mix Digest
+        run: |
+          mix deps.get
+          mix compile
+          mix phx.digest
       - name: Uploads the static files
         uses: actions/upload-artifact@v2
         with:
