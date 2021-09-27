@@ -10,10 +10,14 @@ jobs:
         with:
           node-version: 12
       - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "24.0"
+          elixir: "1.12.3"
       - run: npm install --prefix ./assets
       - run: npm run deploy --prefix ./assets
       - name: Mix Digest
         run: |
+          export MIX_ENV=prod
           mix deps.get
           mix compile
           mix phx.digest
